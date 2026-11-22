@@ -124,7 +124,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Address.h" />
+    <ClInclude Include="CsvParser.h" />
     <ClInclude Include="IAddressParser.h" />
+    <ClInclude Include="Statistics.h" />
+    <ClInclude Include="XmlParser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
