@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "IAddressParser.h"
 #include <fstream>
 #include <sstream>
@@ -12,12 +12,12 @@ public:
         std::ifstream file(filePath);
 
         if (!file.is_open()) {
-            std::cerr << "Îøèáêà: Íå óäàëîñü îòêðûòü ôàéë " << filePath << "\n";
+            std::cerr << "ÐžÑˆÐ¸Ð±ÐºÐ°: ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» " << filePath << "\n";
             return addresses;
         }
 
         std::string line;
-        // Ïðîïóñêàåì ïåðâóþ ñòðîêó ñ çàãîëîâêàìè
+        // ÐŸÑ€Ð¾Ð¿ÑƒÑÐºÐ°ÐµÐ¼ Ð¿ÐµÑ€Ð²ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ñ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ°Ð¼Ð¸
         std::getline(file, line);
 
         while (std::getline(file, line)) {
@@ -27,19 +27,19 @@ public:
             std::stringstream ss(line);
             std::string token;
 
-            // ×èòàåì ãîðîä
+            // Ð§Ð¸Ñ‚Ð°ÐµÐ¼ Ð³Ð¾Ñ€Ð¾Ð´
             std::getline(ss, token, ';');
             addr.city = removeQuotes(token);
 
-            // ×èòàåì óëèöó
+            // Ð§Ð¸Ñ‚Ð°ÐµÐ¼ ÑƒÐ»Ð¸Ñ†Ñƒ
             std::getline(ss, token, ';');
             addr.street = removeQuotes(token);
 
-            // ×èòàåì äîì (â CSV îí áåç êàâû÷åê)
+            // Ð§Ð¸Ñ‚Ð°ÐµÐ¼ Ð´Ð¾Ð¼ (Ð² CSV Ð¾Ð½ Ð±ÐµÐ· ÐºÐ°Ð²Ñ‹Ñ‡ÐµÐº)
             std::getline(ss, token, ';');
             addr.house = std::stoi(token);
 
-            // ×èòàåì ýòàæ (áåç êàâû÷åê)
+            // Ð§Ð¸Ñ‚Ð°ÐµÐ¼ ÑÑ‚Ð°Ð¶ (Ð±ÐµÐ· ÐºÐ°Ð²Ñ‹Ñ‡ÐµÐº)
             std::getline(ss, token, ';');
             addr.floor = std::stoi(token);
 
@@ -49,7 +49,7 @@ public:
     }
 
 private:
-    // Âñïîìîãàòåëüíûé ìåòîä äëÿ î÷èñòêè îò êàâû÷åê
+    // Ð’ÑÐ¿Ð¾Ð¼Ð¾Ð³Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ð¹ Ð¼ÐµÑ‚Ð¾Ð´ Ð´Ð»Ñ Ð¾Ñ‡Ð¸ÑÑ‚ÐºÐ¸ Ð¾Ñ‚ ÐºÐ°Ð²Ñ‹Ñ‡ÐµÐº
     std::string removeQuotes(std::string str) {
         str.erase(std::remove(str.begin(), str.end(), '"'), str.end());
         return str;

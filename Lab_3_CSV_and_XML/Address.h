@@ -1,15 +1,15 @@
-#pragma once
+п»ї#pragma once
 #include <string>
 #include <functional>
 
-// Модель одной записи из справочника
+// РњРѕРґРµР»СЊ РѕРґРЅРѕР№ Р·Р°РїРёСЃРё РёР· СЃРїСЂР°РІРѕС‡РЅРёРєР°
 struct Address {
     std::string city;
     std::string street;
     int house;
     int floor;
 
-    // Перегрузка оператора == необходима для использования структуры в качестве ключа в hashmap
+    // РџРµСЂРµРіСЂСѓР·РєР° РѕРїРµСЂР°С‚РѕСЂР° == РЅРµРѕР±С…РѕРґРёРјР° РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ СЃС‚СЂСѓРєС‚СѓСЂС‹ РІ РєР°С‡РµСЃС‚РІРµ РєР»СЋС‡Р° РІ hashmap
     bool operator==(const Address& other) const {
         return city == other.city &&
             street == other.street &&
@@ -18,10 +18,10 @@ struct Address {
     }
 };
 
-// Структура для вычисления хэша нашего объекта (требуется для std::unordered_map)
+// РЎС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ С…СЌС€Р° РЅР°С€РµРіРѕ РѕР±СЉРµРєС‚Р° (С‚СЂРµР±СѓРµС‚СЃСЏ РґР»СЏ std::unordered_map)
 struct AddressHash {
     std::size_t operator()(const Address& addr) const {
-        // Комбинируем хэши всех полей с помощью побитовых операций сдвига (^)
+        // РљРѕРјР±РёРЅРёСЂСѓРµРј С…СЌС€Рё РІСЃРµС… РїРѕР»РµР№ СЃ РїРѕРјРѕС‰СЊСЋ РїРѕР±РёС‚РѕРІС‹С… РѕРїРµСЂР°С†РёР№ СЃРґРІРёРіР° (^)
         std::size_t h1 = std::hash<std::string>{}(addr.city);
         std::size_t h2 = std::hash<std::string>{}(addr.street);
         std::size_t h3 = std::hash<int>{}(addr.house);

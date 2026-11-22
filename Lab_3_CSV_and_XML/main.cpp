@@ -1,30 +1,31 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <string>
 #include <chrono>
 #include <memory>
 #include "CsvParser.h"
 #include "XmlParser.h"
 #include "Statistics.h"
+#include <windows.h>
 
 int main() {
-    setlocale(LC_ALL, "Russian");
+    SetConsoleCP(65001);
+    SetConsoleOutputCP(65001);
+    //setlocale(LC_ALL, "Russian");
 
-    std::cout << "Приложение для обработки справочников городов.\n";
+    std::cout << "РџСЂРёР»РѕР¶РµРЅРёРµ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё СЃРїСЂР°РІРѕС‡РЅРёРєРѕРІ РіРѕСЂРѕРґРѕРІ.\n";
 
     while (true) {
-        std::cout << "\nВведите путь до файла (.csv или .xml) или 'exit' для выхода: ";
+        std::cout << "\nР’РІРµРґРёС‚Рµ РїСѓС‚СЊ РґРѕ С„Р°Р№Р»Р° (.csv РёР»Рё .xml) РёР»Рё 'exit' РґР»СЏ РІС‹С…РѕРґР°: ";
         std::string input;
         std::getline(std::cin, input);
 
         if (input == "exit" || input == "quit") {
-            std::cout << "Завершение работы.\n";
+            std::cout << "Р—Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹.\n";
             break;
         }
 
-        // Фабрика парсеров. Умный указатель сам очистит память.
         std::unique_ptr<IAddressParser> parser = nullptr;
 
-        // Проверяем расширение файла (вытаскиваем подстроку с конца)
         if (input.length() > 4 && input.substr(input.length() - 4) == ".csv") {
             parser = std::make_unique<CsvParser>();
         }
@@ -32,14 +33,12 @@ int main() {
             parser = std::make_unique<XmlParser>();
         }
         else {
-            std::cout << "Ошибка: Неподдерживаемый формат файла. Требуется .csv или .xml\n";
+            std::cout << "РћС€РёР±РєР°: РќРµРїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Р№ С„РѕСЂРјР°С‚ С„Р°Р№Р»Р°. РўСЂРµР±СѓРµС‚СЃСЏ .csv РёР»Рё .xml\n";
             continue;
         }
 
-        // Засекаем время старта
+        // Р—Р°СЃРµРєР°РµРј РІСЂРµРјСЏ СЃС‚Р°СЂС‚Р°
         auto start = std::chrono::high_resolution_clock::now();
-
-        // Полиморфизм в действии: вызываем parse, не зная на этапе компиляции, какой именно это файл
         std::vector<Address> data = parser->parse(input);
 
         if (!data.empty()) {
@@ -47,11 +46,11 @@ int main() {
             stats.process(data);
         }
 
-        // Останавливаем таймер
+        // РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚Р°Р№РјРµСЂ
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = end - start;
 
-        std::cout << "\nВремя обработки файла: " << duration.count() << " секунд.\n";
+        std::cout << "\nР’СЂРµРјСЏ РѕР±СЂР°Р±РѕС‚РєРё С„Р°Р№Р»Р°: " << duration.count() << " СЃРµРєСѓРЅРґ.\n";
     }
 
     return 0;

@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "IAddressParser.h"
 #include <fstream>
 #include <iostream>
@@ -10,13 +10,12 @@ public:
         std::ifstream file(filePath);
 
         if (!file.is_open()) {
-            std::cerr << "Ошибка: Не удалось открыть файл " << filePath << "\n";
+            std::cerr << "РћС€РёР±РєР°: РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " << filePath << "\n";
             return addresses;
         }
 
         std::string line;
         while (std::getline(file, line)) {
-            // Ищем только строки с <item
             if (line.find("<item") == std::string::npos) continue;
 
             Address addr;
@@ -31,7 +30,6 @@ public:
     }
 
 private:
-    // Функция ищет начало атрибута, например city=", и вырезает значение до закрывающей кавычки
     std::string extractAttribute(const std::string& line, const std::string& attrName) {
         size_t startPos = line.find(attrName);
         if (startPos == std::string::npos) return "";

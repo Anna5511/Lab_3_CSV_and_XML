@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "Address.h"
 #include <vector>
 #include <unordered_map>
@@ -8,22 +8,22 @@
 class Statistics {
 public:
     void process(const std::vector<Address>& addresses) {
-        // Хэш-таблица для поиска дубликатов. Ключ - Адрес, Значение - количество повторений.
+        // РҐСЌС€-С‚Р°Р±Р»РёС†Р° РґР»СЏ РїРѕРёСЃРєР° РґСѓР±Р»РёРєР°С‚РѕРІ. РљР»СЋС‡ - РђРґСЂРµСЃ, Р—РЅР°С‡РµРЅРёРµ - РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРІС‚РѕСЂРµРЅРёР№.
         std::unordered_map<Address, int, AddressHash> duplicates;
 
-        // Хэш-таблица для этажей. Ключ - Город. Значение - массив на 5 элементов (индексы 0-4 соответствуют 1-5 этажам).
+        // РҐСЌС€-С‚Р°Р±Р»РёС†Р° РґР»СЏ СЌС‚Р°Р¶РµР№. РљР»СЋС‡ - Р“РѕСЂРѕРґ. Р—РЅР°С‡РµРЅРёРµ - РјР°СЃСЃРёРІ РЅР° 5 СЌР»РµРјРµРЅС‚РѕРІ (РёРЅРґРµРєСЃС‹ 0-4 СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ 1-5 СЌС‚Р°Р¶Р°Рј).
         std::unordered_map<std::string, std::vector<int>> cityFloors;
 
-        // Делаем всего ОДИН проход по списку (это гарантирует максимальную скорость, О(N))
+        // Р”РµР»Р°РµРј РІСЃРµРіРѕ РћР”РРќ РїСЂРѕС…РѕРґ РїРѕ СЃРїРёСЃРєСѓ (СЌС‚Рѕ РіР°СЂР°РЅС‚РёСЂСѓРµС‚ РјР°РєСЃРёРјР°Р»СЊРЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ, Рћ(N))
         for (const auto& addr : addresses) {
             duplicates[addr]++;
 
-            // Инициализируем массив из 5 нулей для нового города
+            // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РјР°СЃСЃРёРІ РёР· 5 РЅСѓР»РµР№ РґР»СЏ РЅРѕРІРѕРіРѕ РіРѕСЂРѕРґР°
             if (cityFloors.find(addr.city) == cityFloors.end()) {
                 cityFloors[addr.city] = std::vector<int>(5, 0);
             }
 
-            // Если этаж от 1 до 5, увеличиваем счетчик (этаж 1 -> индекс 0)
+            // Р•СЃР»Рё СЌС‚Р°Р¶ РѕС‚ 1 РґРѕ 5, СѓРІРµР»РёС‡РёРІР°РµРј СЃС‡РµС‚С‡РёРє (СЌС‚Р°Р¶ 1 -> РёРЅРґРµРєСЃ 0)
             if (addr.floor >= 1 && addr.floor <= 5) {
                 cityFloors[addr.city][addr.floor - 1]++;
             }
@@ -35,25 +35,25 @@ public:
 
 private:
     void printDuplicates(const std::unordered_map<Address, int, AddressHash>& duplicates) {
-        std::cout << "\n--- Дублирующиеся записи ---\n";
+        std::cout << "\n--- Р”СѓР±Р»РёСЂСѓСЋС‰РёРµСЃСЏ Р·Р°РїРёСЃРё ---\n";
         bool hasDuplicates = false;
         for (const auto& pair : duplicates) {
-            if (pair.second > 1) { // Если встречалось больше 1 раза
+            if (pair.second > 1) { // Р•СЃР»Рё РІСЃС‚СЂРµС‡Р°Р»РѕСЃСЊ Р±РѕР»СЊС€Рµ 1 СЂР°Р·Р°
                 const Address& a = pair.first;
-                std::cout << a.city << ", " << a.street << ", д." << a.house
-                    << ", эт." << a.floor << " -> Повторений: " << pair.second << "\n";
+                std::cout << a.city << ", " << a.street << ", Рґ." << a.house
+                    << ", СЌС‚." << a.floor << " -> РџРѕРІС‚РѕСЂРµРЅРёР№: " << pair.second << "\n";
                 hasDuplicates = true;
             }
         }
-        if (!hasDuplicates) std::cout << "Дубликатов не найдено.\n";
+        if (!hasDuplicates) std::cout << "Р”СѓР±Р»РёРєР°С‚РѕРІ РЅРµ РЅР°Р№РґРµРЅРѕ.\n";
     }
 
     void printCityFloors(const std::unordered_map<std::string, std::vector<int>>& cityFloors) {
-        std::cout << "\n--- Статистика этажности по городам ---\n";
+        std::cout << "\n--- РЎС‚Р°С‚РёСЃС‚РёРєР° СЌС‚Р°Р¶РЅРѕСЃС‚Рё РїРѕ РіРѕСЂРѕРґР°Рј ---\n";
         for (const auto& pair : cityFloors) {
-            std::cout << "Город: " << pair.first << "\n";
+            std::cout << "Р“РѕСЂРѕРґ: " << pair.first << "\n";
             for (int i = 0; i < 5; ++i) {
-                std::cout << "  " << (i + 1) << "-этажных: " << pair.second[i] << "\n";
+                std::cout << "  " << (i + 1) << "-СЌС‚Р°Р¶РЅС‹С…: " << pair.second[i] << "\n";
             }
         }
     }
